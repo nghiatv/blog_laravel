@@ -27,8 +27,9 @@ Route::get('/contact', function(){
     ));
 });
 
-Route::get('/post',function(){
-   return view('post',array(
-       'bg-img' => 'img/post-bg.jpg'
-   ));
-});
+Route::resource('post', 'PostController');
+
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

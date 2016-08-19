@@ -1,7 +1,6 @@
 @extends('layouts.default')
 @section('title','post')
 @section('titlePage')
-    {{--@parent--}}
     <h1>{{ $title or 'Clean Blog' }}</h1>
     <h2>{{ $description or 'A Clean Blog Theme by Start Bootstrap' }}</h2>
     <hr class="small">
