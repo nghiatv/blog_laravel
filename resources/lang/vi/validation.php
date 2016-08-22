@@ -18,7 +18,7 @@ return [
     'after'                => 'The :attribute must be a date after :date.',
     'alpha'                => 'The :attribute may only contain letters.',
     'alpha_dash'           => 'The :attribute may only contain letters, numbers, and dashes.',
-    'alpha_num'            => 'The :attribute may only contain letters and numbers.',
+    'alpha_num'            => 'Cái :attribute chỉ chấp nhận chữ vào số thôi.',
     'array'                => 'The :attribute must be an array.',
     'before'               => 'The :attribute must be a date before :date.',
     'between'              => [
@@ -70,7 +70,7 @@ return [
     'required_with_all'    => 'The :attribute field is required when :values is present.',
     'required_without'     => 'The :attribute field is required when :values is not present.',
     'required_without_all' => 'The :attribute field is required when none of :values are present.',
-    'same'                 => 'Cái :attribute phải giống cái này :other',
+    'same'                 => 'Cái :attribute phải giống cái :other này',
     'size'                 => [
         'numeric' => 'The :attribute must be :size.',
         'file'    => 'The :attribute must be :size kilobytes.',
