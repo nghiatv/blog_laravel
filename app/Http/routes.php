@@ -19,26 +19,51 @@ Route::get('/about', function () {
         'bg_img' => 'img/about-bg.jpg'
     ));
 });
-
-
 Route::get('/contact', function () {
     return view('contact', array(
         'bg_img' => 'img/contact-bg.jpg'
     ));
 });
 
-Route::resource('post', 'PostController');
+Route::resource('/post', 'PostController');
 
 
-Route::auth();
+//Route::get('/login', 'LoginController');
+//Route::resource
 
-Route::get('/home', 'HomeController@index');
+
+//xu ly dang ki dang nhap
+
+Route::get('/login', 'LoginController@index');
+Route::post('/login', 'LoginController@check');
+Route::get('/register', 'RegisterController@index');
+Route::post('/register', 'RegisterController@check');
+Route::get('/logout', 'LoginController@logout');
+
+Route::get('/register/verify/{confirmation_code}', 'RegisterController@confirm');
+
+// Password Reset Routes...
+Route::get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+Route::post('password/reset', 'Auth\PasswordController@reset');
 
 
-Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+// xu ly admin route
+
+Route::get('/admin/login', 'LoginController@adminIndex');
+Route::post('/admin/login', 'LoginController@adminCheck');
+Route::get('/admin/logout', 'LoginController@adminLogout');
+
+
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/', function () {
         return view('admin.dashboard');
     });
 
-    Route::resource('/user', 'UserController');
+    Route::get('/profile', 'ProfileController@index');
+    Route::put('/profile', 'ProfileController@updateInfo');
+
+    Route::post('/profile/upload', 'ProfileController@uploadImage');
+
+    Route::resource('/users', 'UserController');
 });

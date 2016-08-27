@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'laravel.tech11@gmail.com', 'name' => 'Singleton'],
 
     /*
     |--------------------------------------------------------------------------
