@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use File;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 
@@ -96,6 +97,37 @@ class ProfileController extends Controller
 
         return redirect()->back()->with(['success' => 'Thay đổi avatar thành công']);
 
+
+    }
+
+
+    public function updatePassword(Request $request)
+    {
+//        dd($request->all());
+//        $input = $request->only(['last_password', 'password','password_conf']);
+        $rule = array(
+            'old_password' => 'required|min:6|max:255',
+            'password' => 'required|min:6|confirmed',
+
+        );
+
+        $validation = Validator::make($request->all(), $rule);
+
+        if ($validation->fails()) {
+            return redirect()->back()->withErrors($validation);
+        }
+
+        //Check password
+
+        if (!Hash::check($request->old_password, Auth::user()->password)) {
+            // Neu mat khau dung thi chay vao day
+            return redirect()->back()->withErrors(['old_password' => 'Mật khẩu cũ không chính xác']);
+        }
+
+        Auth::user()->password = bcrypt($request->password);
+        Auth::user()->save();
+
+        return redirect()->back()->with('success', 'Thay doi mat khau thanh cong!');
 
     }
 }
