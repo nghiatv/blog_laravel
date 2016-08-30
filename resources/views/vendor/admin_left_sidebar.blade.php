@@ -66,8 +66,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/"><i class="fa fa-circle-o"></i> Danh sách bài viết</a></li>
-                    <li><a href="/"><i class="fa fa-circle-o"></i> Thêm mới bài viết</a></li>
+                    <li><a href="/admin/posts/"><i class="fa fa-circle-o"></i> Danh sách bài viết</a></li>
+                    <li><a href="{{ url('/admin/posts/create') }}"><i class="fa fa-circle-o"></i> Thêm mới bài viết</a></li>
                     {{--<li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>--}}
                     {{--<li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>--}}
                 </ul>

@@ -37,25 +37,11 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-{{--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>--}}
 
 
 <!-- Bootstrap 3.3.6 -->
 <script src="/adminlte/bootstrap/js/bootstrap.min.js"></script>
 
-
-
-<!-- Sparkline -->
-{{--<script src="/adminlte/plugins/sparkline/jquery.sparkline.min.js"></script>--}}
-
-<!-- daterangepicker -->
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>--}}
-<script src="/adminlte/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="/adminlte/plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-{{--<script src="/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>--}}
 <!-- Slimscroll -->
 <script src="/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->

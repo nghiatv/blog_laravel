@@ -64,7 +64,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::put('/profile', 'ProfileController@updateInfo');
 
     Route::post('/profile/upload', 'ProfileController@uploadImage');
-    Route::post('/profile/password','ProfileController@updatePassword');
+    Route::post('/profile/password', 'ProfileController@updatePassword');
 
     Route::resource('/users', 'UserController');
+
+
+    Route::resource('/posts', 'PostController');
 });
