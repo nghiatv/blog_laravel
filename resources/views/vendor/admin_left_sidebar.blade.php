@@ -4,7 +4,8 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="/adminlte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="{{ Auth::user()->link_image ? Auth::user()->link_image : '/adminlte/dist/img/user2-160x160.jpg'}}"
+                     class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
@@ -67,8 +68,22 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="/admin/posts/"><i class="fa fa-circle-o"></i> Danh sách bài viết</a></li>
-                    <li><a href="{{ url('/admin/posts/create') }}"><i class="fa fa-circle-o"></i> Thêm mới bài viết</a></li>
-                    {{--<li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>--}}
+                    <li><a href="{{ url('/admin/posts/create') }}"><i class="fa fa-circle-o"></i> Thêm mới bài viết</a>
+                    </li>
+                    {{--<li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>--}}
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-pie-chart"></i>
+                    <span>Quản tri Category</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('admin/categories/create')  }}"><i class="fa fa-circle-o"></i> Thêm category mới</a>
+                    </li>
                     {{--<li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>--}}
                 </ul>
             </li>

@@ -48,6 +48,10 @@ Route::post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
 Route::post('password/reset', 'Auth\PasswordController@reset');
 
 
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
+});
+
 // xu ly admin route
 
 Route::get('/admin/login', 'LoginController@adminIndex');
@@ -67,7 +71,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::post('/profile/password', 'ProfileController@updatePassword');
 
     Route::resource('/users', 'UserController');
-
-
     Route::resource('/posts', 'PostController');
+    Route::post('/posts/tag', 'PostController@storeTag');
+
+    Route::resource('/categories','CategoryController');
 });

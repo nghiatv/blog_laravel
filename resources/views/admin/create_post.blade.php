@@ -34,8 +34,8 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header">
-                        <h3 class="box-title">CK Editor
-                            <small>Advanced and full of features</small>
+                        <h3 class="box-title">Tạo bài viết mới
+                            <small>Các anh chị tạo bài viết thì viết vào đây nhé</small>
                         </h3>
                         <!-- tools box -->
                         <div class="pull-right box-tools">
@@ -50,9 +50,19 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body pad">
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form>
                             <div class="row">
-                                <div class="col-sm-9">
+                                <div class="col-sm-9 col-md-8">
 
                                     <div class="form-group">
                                         <label for="titlePost">Tiêu đề bài viết</label>
@@ -73,7 +83,7 @@
                                          </textarea>
                                     </div>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 col-md-4">
                                     <div class="form-group">
                                         <label>Trạng thái</label>
                                         <select class="form-control" style="width: 100%;">
@@ -95,16 +105,24 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Multiple</label>
-                                        <select class="form-control select2" multiple="multiple"
-                                                data-placeholder="Chọn Tag" style="width: 100%;">
-                                            <option>Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
-                                        </select>
+                                        <div class="input-group ">
+                                            <select class="form-control select2 " multiple="multiple"
+                                                    data-placeholder="Chọn Tag" style="width: 100%;">
+                                                @if(count($tags) > 0)
+                                                    @foreach($tags as $tag )
+                                                        <option value="{{ $tag->name }}"> {{$tag->name}}</option>
+
+                                                    @endforeach
+                                                @endif
+
+                                            </select>
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-info btn-flat btn-sm"
+                                                        data-toggle="modal" data-target="#addTag"><i
+                                                            class="fa fa-plus"></i> Thêm tag
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Ảnh đại diện</label>
@@ -112,8 +130,10 @@
                                              src="/img/contact-bg.jpg"
                                              alt="Banner Picture">
                                         <div class="form-group fileUpload">
-                                            <input type="file" class="upload" id="image_file" name="banner_image" value="upload">
-                                            <button class="btn btn-primary" style="width: 100%"><i class="fa fa-edit">Tải lên banner</i></button>
+                                            <input type="file" class="upload" id="image_file" name="banner_image"
+                                                   value="upload">
+                                            <button class="btn btn-primary" style="width: 100%"><i class="fa fa-edit">Tải
+                                                    lên banner</i></button>
 
                                         </div>
                                     </div>
@@ -132,17 +152,46 @@
         <!-- ./row -->
     </section>
 
+    <div class="modal fade" id="addTag" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" onclick="location.reload()" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Thêm Tag</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div id="errors">
+
+                    </div>
+                    <form id="addTag">
+                        <div class="input-group input-group-sm">
+                            {{csrf_field()}}
+
+                            <input id="tag-name" type="text" class="form-control" name="name">
+                            <span class="input-group-btn">
+                              <button type="submit" class="btn btn-info btn-flat"><i class="fa fa-plus"></i> Thêm
+                              </button>
+                            </span>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="location.reload()">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     @endsection
 
 
     @push('scripts')
             <!-- CK Editor -->
     <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
-    <!-- Bootstrap WYSIHTML5 -->
-    {{--<script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>--}}
     <script src="/adminlte/plugins/select2/select2.full.min.js"></script>
-
-
     <script>
         //Initialize Select2 Elements
         $(".select2").select2();
@@ -163,6 +212,8 @@
         });
     </script>
     <script>
+
+        // xem truoc anh
         function readURL(input) {
 
             if (input.files && input.files[0]) {
@@ -179,6 +230,39 @@
         $("#image_file").change(function () {
             readURL(this);
         });
+
+        $('#addTag').submit(function (e) {
+            var form = $('form#addTag');
+            console.log(form.serialize());
+//            return false;
+
+
+            $.ajax({
+                        'url': 'http://localhost:8000/admin/posts/tag',
+                        'method': 'POST',
+                        'data': form.serialize()
+
+                    }
+            ).done(function (success) {
+               $('#tag-name').val('');
+
+                if(success.error)
+                {
+                    var str = '<div class="alert alert-danger alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> <h4><i class="icon fa fa-ban"></i> Alert!</h4>'+success.error+'</div>';
+
+                }else{
+                    var str = '<div class="alert alert-success alert-dismissible"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> <h4><i class="icon fa fa-success"></i> Alert!</h4>'+success.success+'</div>';
+                }
+                $('#errors').html(str);
+
+                console.log(success);
+            }).fail(function (e) {
+                console.log(e);
+            });
+            e.preventDefault();
+        })
+
+
     </script>
 
     @endpush

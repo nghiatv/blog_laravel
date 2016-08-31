@@ -76,7 +76,6 @@ class ProfileController extends Controller
 
         // neu ma thong qua duoc vaildation r y
 
-        $image_name = $request->file('image_file')->getClientOriginalName();
         $image_extension = $request->file('image_file')->getClientOriginalExtension();
 
         $new_name = md5(microtime(true)) . '.' . $image_extension;

@@ -50,7 +50,7 @@
 
             <!-- Profile Image -->
             <div class="box box-primary">
-                <form action="profile/upload" enctype="multipart/form-data" method="post">
+                <form action="/profile/upload" enctype="multipart/form-data" method="post">
                     <div class="box-body box-profile">
                         <img id="blah" class="profile-user-img img-responsive img-circle"
                              src="{{ $admin->link_image ? " $admin->link_image" : "/img/nullavt.png" }}"
@@ -59,7 +59,7 @@
 
                         {{ csrf_field() }}
                         <div class="form-group fileUpload">
-                            {{--<buttonn>asdasd</buttonn>--}}
+
                             <input type="file" class="upload" id="image_file" name="image_file" value="upload">
                             <button class="btn btn-primary"><i class="fa fa-edit"> Sửa</i></button>
 
@@ -68,18 +68,6 @@
                         <h3 class="profile-username text-center">{{ $admin->name }}</h3>
 
                         <p class="text-muted text-center">{{ $admin->email }}</p>
-
-                        <ul class="list-group list-group-unbordered">
-                            <li class="list-group-item">
-                                <b>Followers</b> <a class="pull-right">1,322</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Following</b> <a class="pull-right">543</a>
-                            </li>
-                            <li class="list-group-item">
-                                <b>Friends</b> <a class="pull-right">13,287</a>
-                            </li>
-                        </ul>
 
                         <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-edit"></i><b>Thay
                                 đổi</b></button>
