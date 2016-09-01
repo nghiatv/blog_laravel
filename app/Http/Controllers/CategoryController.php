@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use Validator;
+use App\Post;
 use App\Http\Requests;
 
 class CategoryController extends Controller
@@ -17,6 +18,12 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $data = Category::all();
+
+        return view('admin.list_category',array(
+            'data' => $data
+        ));
+
     }
 
     /**
@@ -44,7 +51,7 @@ class CategoryController extends Controller
 
         $rules = array(
             'title' => 'required|string',
-            'description' => 'required|min:50|string',
+            'description' => 'required|min:20|string',
             'banner_image' => 'mimes:jpg,jpeg,png,gif,bmp'
         );
 
@@ -62,7 +69,7 @@ class CategoryController extends Controller
             $image_extension = $request->file('banner_image')->getClientOriginalExtension();
             $new_name = md5(microtime(true)) . "." . $image_extension;
             $full_path = '/img/' . $new_name;
-            $destination_path = base_path() . 'public/img/';
+            $destination_path = base_path() . '/public/img/';
             $request->file('banner_image')->move($destination_path, $new_name);
         }
 
@@ -73,11 +80,10 @@ class CategoryController extends Controller
         $category->description = $request->description;
         $category->banner_image = isset($full_path) ? $full_path : '/img/contact-bg.jpg';
         $category->status = isset($request->status) ? 1 : 0; # 1 la public 0 la nhap
-
         $category->save();
 
 
-        return redirect()->back()->with('success', 'Tạo mới thành công nhé');
+        return redirect('/admin/categories/' . $category->id . '/edit')->with('success', 'Tạo mới thành công nhé');
 
     }
 
@@ -89,13 +95,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $
 
-        $category = Category::find($id);
-
-        return view('admin.edit_category', array(
-            'data' => $category
-        ));
     }
 
     /**
@@ -107,6 +108,17 @@ class CategoryController extends Controller
     public function edit($id)
     {
         //
+        //
+
+        $category = Category::find($id);
+
+//        dd($category);
+
+        return view('admin.edit_category', array(
+            'data' => $category
+        ));
+
+
     }
 
     /**
@@ -118,7 +130,53 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+        // Lay cac de file dang sua
+
+        $category = Category::find($id);
+
+
+//        kiem tra tinh hop le cua input
+
+        $rules = array(
+            'title' => 'required|string',
+            'description' => 'required|min:20|string',
+            'banner_image' => 'mimes:jpg,jpeg,png,gif,bmp'
+        );
+
+        $validation = Validator::make($request->all(), $rules);
+
+        if ($validation->fails()) {
+
+            return redirect()->back()->withErrors($validation)->withInput();
+
+        }
+
+
+        //        Xử lý các request đến
+        //        Cập nhật ảnh bìa nếu thay đổi
+
+        if ($request->file('banner_image')) {
+            $image_extension = $request->file('banner_image')->getClientOriginalExtension();
+            $new_name = md5(microtime(true)) . "." . $image_extension;
+            $full_path = '/img/' . $new_name;
+            $destination_path = base_path() . '/public/img/';
+            $request->file('banner_image')->move($destination_path, $new_name);
+        }
+
+        $category->name = $request->title;
+        $category->description = $request->description;
+        $category->banner_image = isset($full_path) ? $full_path : '/img/contact-bg.jpg';
+        $category->status = isset($request->status) ? 1 : 0; # 1 la public 0 la nhap
+        $category->save();
+
+
+        return redirect('/admin/categories/' . $category->id . '/edit')->with('success', 'Cập nhật thành công nhé');
+
+
+//        dd($request->all());
+
     }
 
     /**
@@ -129,6 +187,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Xóa 1 category
+
+            Category::destroy($id);
+
     }
 }

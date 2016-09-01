@@ -82,8 +82,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ url('admin/categories/create')  }}"><i class="fa fa-circle-o"></i> Thêm category mới</a>
-                    </li>
+                    <li><a href="{{ url('admin/categories')  }}"><i class="fa fa-circle-o"></i> Danh sách Category</a></li>
+                    <li><a href="{{ url('admin/categories/create')  }}"><i class="fa fa-circle-o"></i> Thêm category mới</a></li>
                     {{--<li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>--}}
                 </ul>
             </li>

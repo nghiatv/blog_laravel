@@ -31,7 +31,7 @@
         <div class="col-sm-6 col-sm-offset-3">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Thêm mới category</h3>
+                    <h3 class="box-title">Chỉnh sửa category: <b>{{ $data->name }}</b> </h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -44,23 +44,36 @@
                         </ul>
                     </div>
                 @endif
-                <form role="form" action="{{ url('/admin/categories/').$data->id}}" method="post"
+
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><i class="icon fa fa-check"></i> Alert!</h4>
+                       {{ session('success') }}
+                    </div>
+                @endif
+
+                <form role="form" action="{{ url('/admin/categories').'/'.$data->id}}" method="post"
                       enctype="multipart/form-data">
                     {{csrf_field()}}
                     {{ method_field('PUT') }}
                     <div class="box-body">
                         <div class="form-group">
                             <label for="titleCategory">Title</label>
-                            <input type="text" class="form-control" id="titleCategory" name="title"
+                            <input type="text" class="form-control" id="titleCategory" name="title" value="{{ $data->name }}"
                                    placeholder="Enter title">
                         </div>
                         <div class="form-group">
                             <label for="description">Mô tả</label>
-                            <textarea class="form-control" id="description" name="description" rows="5"></textarea>
+                            <textarea class="form-control" id="description" name="description" rows="5">{{ $data->description }}</textarea>
                         </div>
                         <div class="form-group">
                             <label>
-                                <input type="checkbox" name="status"> Public or Not
+                                <input type="checkbox" name="status"
+
+                                {{ $data->status ? 'checked' : '' }}
+
+                                > Public or Not
                             </label>
 
                             <p class="help-block">Có public hay là không?</p>
@@ -68,13 +81,12 @@
                         <div class="form-group">
                             <label>Ảnh đại diện</label>
                             <img id="demo_img" class="img-responsive"
-                                 src="/img/contact-bg.jpg"
+                                 src="{{ $data->banner_image }}"
                                  alt="Banner Picture">
                             <div class="form-group fileUpload">
                                 <input type="file" class="upload" id="image_file" name="banner_image"
                                        value="upload">
-                                <button class="btn btn-success pull-right"><i class="fa fa-upload"> Tải
-                                        lên banner</i></button>
+                                <button class="btn btn-success pull-right"><i class="fa fa-upload"> Thay đổi banner</i></button>
 
                             </div>
                         </div>
